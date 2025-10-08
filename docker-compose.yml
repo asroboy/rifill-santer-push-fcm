@@ -1,11 +1,24 @@
-version: '2'
+version: '3.8' # Specify the Compose file format version
+
 services:
-  pushservice:
-    build: 
-	  - context: ./
-	  - dockerfile: Dockerfile
+  web: # Name of your first service (e.g., a web application)
+    build: . # Build the image from the current directory (where the Dockerfile is)
     ports:
-      - "3000:3000"
+      - "3000:3000" # Map host port 80 to container port 80
     volumes:
-      - /push-app :/app
-    privileged: true
+      - .:/app # Mount the current directory as a volume inside the container at /app
+      - config:/config
+    # depends_on:
+    #   - db # Specify that this service depends on the 'db' service
+
+  # db: # Name of your second service (e.g., a database)
+  #   image: postgres:13 # Use a pre-built PostgreSQL image from Docker Hub
+  #   environment:
+  #     POSTGRES_DB: mydatabase
+  #     POSTGRES_USER: user
+  #     POSTGRES_PASSWORD: password
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data # Persist database data in a named volume
+
+volumes:
+  db_data: # Define the named volume for database persistence
