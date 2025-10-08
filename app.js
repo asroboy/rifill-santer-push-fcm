@@ -4,7 +4,7 @@
 import express from 'express';
 import admin from 'firebase-admin';
 import { getMessaging } from "firebase-admin/messaging";
-import serviceAccount from './firebaseConfig.json'  with { type: 'json' };
+import serviceAccount from './config/firebaseConfig.json'  with { type: 'json' };
 // const serviceAccount = await import('./santer-93c5b-firebase-adminsdk-fbsvc-5c555bc105.json', { with: { type: 'json' } });
 
 
