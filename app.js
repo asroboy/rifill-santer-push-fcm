@@ -82,7 +82,7 @@ app.post('/push_multiple_devices', (req, res) => {
     //     token: registrationToken
     // };
 
-    admin.messaging().sendMulticast(message)
+    admin.messaging().sendEachForMulticast(message)
         .then((response) => {
             // Response is a message ID string.
             console.log('Multicast notification sent:', response);
