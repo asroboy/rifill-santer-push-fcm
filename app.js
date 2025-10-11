@@ -1,6 +1,3 @@
-
-// const express = require('express');
-// const admin = require('firebase-admin');
 import express from 'express';
 import admin from 'firebase-admin';
 import { getMessaging } from "firebase-admin/messaging";
@@ -70,6 +67,35 @@ app.post('/push', (req, res) => {
 
 
 });
+
+
+
+app.post('/push_multiple_devices', (req, res) => {
+
+    const message = req.body; // Access data from the request body
+
+    // const message = {
+    //     data: {
+    //         score: '850',
+    //         time: '2:45'
+    //     },
+    //     token: registrationToken
+    // };
+
+    admin.messaging().sendMulticast(message)
+        .then((response) => {
+            // Response is a message ID string.
+            console.log('Multicast notification sent:', response);
+            res.json(response);
+        })
+        .catch((error) => {
+            console.log('Error sending multicast notification:', error);
+            res.json(error);
+        });
+
+
+});
+
 
 // Start the server
 app.listen(port, () => {
