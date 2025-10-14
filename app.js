@@ -46,23 +46,23 @@ app.post('/push', (req, res) => {
 
     const message = req.body; // Access data from the request body
 
-    // const message = {
-    //     data: {
-    //         score: '850',
-    //         time: '2:45'
-    //     },
-    //     token: registrationToken
-    // };
-
     admin.messaging().send(message)
         .then((response) => {
             // Response is a message ID string.
             console.log('Successfully sent message:', response);
-            res.json(response);
+            const msg = {
+                "success": true,
+                "messageId": response
+            }
+            res.json(msg);
         })
         .catch((error) => {
             console.log('Error sending message:', error);
-            res.json(error);
+            const msg = {
+                "success": false,
+                "messageId": error.message
+            }
+            res.json(msg);
         });
 
 
@@ -73,14 +73,6 @@ app.post('/push', (req, res) => {
 app.post('/push_multiple_devices', (req, res) => {
 
     const message = req.body; // Access data from the request body
-
-    // const message = {
-    //     data: {
-    //         score: '850',
-    //         time: '2:45'
-    //     },
-    //     token: registrationToken
-    // };
 
     admin.messaging().sendEachForMulticast(message)
         .then((response) => {
@@ -102,10 +94,3 @@ app.listen(port, () => {
     console.log(`Web service listening at http://localhost:${port}`);
 });
 
-
-// // This registration token comes from the client FCM SDKs.
-// const registrationToken = 'YOUR_REGISTRATION_TOKEN';
-
-
-// // Send a message to the device corresponding to the provided
-// // registration token.
